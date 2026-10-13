@@ -1,0 +1,2 @@
+ALTER TABLE "notifications" ADD COLUMN "dedupe_key" varchar(120);--> statement-breakpoint
+CREATE UNIQUE INDEX "notifications_user_dedupe_uq" ON "notifications" USING btree ("user_id","dedupe_key") WHERE "notifications"."dedupe_key" IS NOT NULL;

@@ -1,0 +1,100 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+/* CoinHub palette: ink navy, brass accent, cool paper. */
+:root {
+  --radius: 0.5rem;
+  --background: #f3f5f7;
+  --foreground: #0f1f2e;
+  --card: #ffffff;
+  --card-foreground: #0f1f2e;
+  --popover: #ffffff;
+  --popover-foreground: #0f1f2e;
+  --primary: #0f1f2e;
+  --primary-foreground: #f3f5f7;
+  --secondary: #e4e9ee;
+  --secondary-foreground: #0f1f2e;
+  --muted: #e9edf1;
+  --muted-foreground: #52606d;
+  --accent: #e0a526;
+  --accent-foreground: #0f1f2e;
+  --destructive: #c2413b;
+  --success: #1f8a70;
+  --border: #d5dce3;
+  --input: #c3ccd5;
+  --ring: #e0a526;
+}
+
+.dark {
+  --background: #0b1620;
+  --foreground: #eef2f6;
+  --card: #122232;
+  --card-foreground: #eef2f6;
+  --popover: #122232;
+  --popover-foreground: #eef2f6;
+  --primary: #e0a526;
+  --primary-foreground: #0f1f2e;
+  --secondary: #1b2f43;
+  --secondary-foreground: #eef2f6;
+  --muted: #1b2f43;
+  --muted-foreground: #9fb0c0;
+  --accent: #e0a526;
+  --accent-foreground: #0f1f2e;
+  --destructive: #e5675f;
+  --success: #3fbf9f;
+  --border: #24384c;
+  --input: #2d445a;
+  --ring: #e0a526;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: 'tnum' 1; /* tabular figures: amounts line up */
+  }
+  h1,
+  h2,
+  h3 {
+    @apply tracking-tight;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

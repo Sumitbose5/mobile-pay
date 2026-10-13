@@ -1,0 +1,49 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  server:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env: { POSTGRES_USER: coinhub, POSTGRES_PASSWORD: coinhub, POSTGRES_DB: coinhub_test }
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U coinhub" --health-interval 5s --health-timeout 3s --health-retries 10
+      redis:
+        image: redis:7-alpine
+        ports: ['6379:6379']
+    env:
+      NODE_ENV: test
+      DATABASE_URL: postgres://coinhub:coinhub@localhost:5432/coinhub_test
+      DATABASE_URL_DIRECT: postgres://coinhub:coinhub@localhost:5432/coinhub_test
+      REDIS_URL: redis://localhost:6379
+      JWT_ACCESS_SECRET: ci-access-secret-ci-access-secret-123456
+      CSRF_SECRET: ci-csrf-secret-ci-csrf-secret-1234567
+      GATEWAY_WEBHOOK_SECRET: ci-gateway-secret-ci-gateway-12345
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npm run lint -w server
+      - run: npm run typecheck -w server
+      - run: npm run db:migrate -w server
+      - run: npm run test -w server
+      - run: npm run build -w server
+      - run: npm audit --omit=dev --audit-level=high -w server
+
+  client:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npm run lint -w client
+      - run: npm run typecheck -w client
+      - run: npm run build -w client

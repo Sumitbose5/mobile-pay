@@ -1,0 +1,35 @@
+{
+  "name": "coinhub",
+  "private": true,
+  "version": "0.1.0",
+  "description": "CoinHub - transaction-safe digital wallet (PERN + TypeScript)",
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev": "concurrently -n server,worker,client -c blue,magenta,green \"npm run dev -w server\" \"npm run dev:worker -w server\" \"npm run dev -w client\"",
+    "build": "npm run build -w server && npm run build -w client",
+    "lint": "npm run lint -w server && npm run lint -w client",
+    "typecheck": "npm run typecheck -w server && npm run typecheck -w client",
+    "test": "npm run test -w server",
+    "format": "prettier --write .",
+    "db:generate": "npm run db:generate -w server",
+    "db:push": "npm run db:push -w server",
+    "db:migrate": "npm run db:migrate -w server",
+    "db:seed": "npm run db:seed -w server",
+    "db:reset": "npm run db:reset -w server",
+    "db:studio": "npm run db:studio -w server",
+    "infra:up": "docker compose up -d",
+    "infra:down": "docker compose down",
+    "worker": "npm run worker -w server",
+    "admin:create": "npm run admin:create -w server --"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1",
+    "prettier": "^3.3.3"
+  },
+  "engines": {
+    "node": ">=22.9"
+  }
+}
