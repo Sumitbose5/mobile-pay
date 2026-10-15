@@ -17,7 +17,7 @@ const REFRESH_PATH = '/api/v1/auth';
 /** A just-rotated token presented again within this window is a racing tab, not theft. */
 const REUSE_GRACE_MS = 10_000;
 
-const baseCookie: CookieOptions = { httpOnly: true, secure: isProd, sameSite: 'strict' };
+const baseCookie: CookieOptions = { httpOnly: true, secure: isProd, sameSite: isProd ? 'none' : 'lax' };
 const refreshTtlMs = () => env.REFRESH_TOKEN_TTL_DAYS * 24 * 60 * 60 * 1000;
 
 interface SessionUser {

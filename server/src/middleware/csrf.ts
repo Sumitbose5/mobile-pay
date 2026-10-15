@@ -12,7 +12,7 @@ const EXEMPT_PREFIXES = ['/payments/webhook', '/auth/register', '/auth/verify-em
 
 export const csrfCookieOptions: CookieOptions = {
   httpOnly: false, // the SPA must read it to echo it in the header
-  sameSite: 'strict',
+  sameSite: isProd ? 'none' : 'lax',
   secure: isProd,
   path: '/',
   maxAge: 7 * 24 * 60 * 60 * 1000,
