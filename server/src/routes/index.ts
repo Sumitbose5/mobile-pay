@@ -20,7 +20,7 @@ import { walletRouter } from '../modules/wallet/wallet.routes.js';
 export const apiRouter = Router();
 
 apiRouter.use(limiters.global());
-apiRouter.use(csrfProtection);
+// apiRouter.use(csrfProtection);
 
 apiRouter.get('/', (_req, res) => {
   res.json({ success: true, data: { name: 'CoinHub API', version: 'v1' } });
